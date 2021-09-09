@@ -3,15 +3,15 @@
 
 using namespace std;
 
-// Calculate Function value
-void Func(double &value, const arma::vec &para){
+// // Calculate Function value
+// void Func(double &value, const arma::vec &para){
 
-}
+// }
 
-// Calculate Function derivative
-void Deri(double &deri, const arma::vec &para){
+// // Calculate Function derivative
+// void Deri(double &deri, const arma::vec &para){
 
-}
+// }
 
 
 int main()
