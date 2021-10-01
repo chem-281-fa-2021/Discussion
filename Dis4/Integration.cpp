@@ -34,7 +34,7 @@ public:
 
 double Integration(Integrand &f, const double start, const double end, const int numpoints)
 {
-	double stepsize = (end - start) / double(numpoints);
+	double stepsize = (end - start) / double(numpoints); // h*N = b-a   int/2.0 = 2 int = 5  
 	double Sum = (f.eval(start) + f.eval(end)) / 2;
 	for (int k = 1; k < numpoints; k++)
 		// printf("%1.2f + %1.2f + %1.2f+ %1.2f \n", n0 * (end - start), n1/2.0 * (end*end - start*start), start, end);

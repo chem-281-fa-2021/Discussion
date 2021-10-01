@@ -2,24 +2,7 @@
 #include <stdlib.h>
 #include <cstring>
 
-// void printnumber(char*list, int target)
-// {
-//   if (target == 0)
-//   {
-//   printf("%s\n", list);
-//   return;
-//   }
-//   else{
-//     for(int k = 1; k <= target ; k++){
-//       const unsigned int position = strlen(list);
-//       sprintf(list+position, "%d ", k);
-//     // printf("%s\n", list);
-//       printnumber(list, k -1);
-//     }
-//   }
-// }
-
-void printnumber(char*list, int target, int position)
+void printnumber(char*list, int target)
 {
   if (target == 0)
   {
@@ -28,15 +11,14 @@ void printnumber(char*list, int target, int position)
   }
   else{
     for(int k = 1; k <= target ; k++){
+      const unsigned int position = strlen(list);
       sprintf(list+position, "%d ", k);
     // printf("%s\n", list);
-      const unsigned int newposition = strlen(list);
-      printnumber(list, k -1 , newposition);
+      printnumber(list, k -1);
     }
   }
 }
 
-// // Decreasing Sequence
 // void printnumber(char*list, int target, int position)
 // {
 //   if (target == 0)
@@ -45,13 +27,31 @@ void printnumber(char*list, int target, int position)
 //   return;
 //   }
 //   else{
-//     for(int k = target; k >= 1 ; k--){
+//     for(int k = 1; k <= target ; k++){
 //       sprintf(list+position, "%d ", k);
+//     // printf("%s\n", list);
 //       const unsigned int newposition = strlen(list);
 //       printnumber(list, k -1 , newposition);
 //     }
 //   }
 // }
+
+// Decreasing Sequence
+void printnumber(char*list, int target, int position)
+{
+  if (target == 0)
+  {
+  printf("%s\n", list);
+  return;
+  }
+  else{
+    for(int k = target; k >= 1 ; k--){
+      sprintf(list+position, "%d ", k);
+      const unsigned int newposition = strlen(list);
+      printnumber(list, k -1 , newposition);
+    }
+  }
+}
 
 int main(int argc, char *argv[])
 {

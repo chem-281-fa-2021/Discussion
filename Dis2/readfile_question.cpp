@@ -20,17 +20,35 @@ struct Student
     }
 };
 
-void Readfile(double &Readed, string &fname)
+void Readfile(vector<double> &Readed, string &fname)
 {
     ifstream in;
-    in.open(fname, ios::in);
-    in >> Readed;
-    // {
-    //     string line;
-    //     getline(in, line);
-    //     istringstream iss(line);
-    //     iss >> Readed;
-    // }
+    in.open(fname, ios::in); //ifstream in(fname, ios::in);
+    // in >> Readed;
+    string line;
+    double readed_double;
+    while(getline(in, line))
+    {
+        istringstream iss(line);
+        iss >> readed_double;
+        Readed.push_back(readed_double);
+    }
+    in.close();
+}
+
+void Readfile(vector<Student> &Readed, string &fname)
+{
+    ifstream in;
+    in.open(fname, ios::in); //ifstream in(fname, ios::in);
+    // in >> Readed;
+    string line;
+    Student readed_stu;
+    while(getline(in, line))
+    {
+        istringstream iss(line);
+        iss >> readed_stu.Name >> readed_stu.age >> readed_stu.score;
+        Readed.push_back(readed_stu);
+    }
     in.close();
 }
 
@@ -40,10 +58,12 @@ int main(int argc, char *argv[])
     {
         cout << "Please input the file name!";
     }
-    double Readed;
+    vector<Student> Readed;
     string fname = argv[1];
     Readfile(Readed, fname);
 
-    cout << "We read " << Readed << " from the file." << endl;
+    // cout << "We read " << Readed << " from the file." << endl;
+    for(auto x:Readed)
+        cout<<x <<endl;
     return EXIT_SUCCESS;
 }

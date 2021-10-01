@@ -6,10 +6,7 @@ using namespace std;
 
 class base {
 public:
-	virtual void print()
-	{
-		cout << "print base class" << endl;
-	}
+	virtual void print()=0;
 
 	void show()
 	{
@@ -32,6 +29,7 @@ public:
 
 int main()
 {
+	base abaseclass;
 	base* bptr;
 	derived d;
 	bptr = &d;

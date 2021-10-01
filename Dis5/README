@@ -1,0 +1,13 @@
+ first homework:
+ find the bug in linkedlist.cpp
+
+
+ second homework:
+ implement insertafterkey
+			You need to generate a new key, just like insert function
+           again, if the key doesn't exist issue and error (throw/catch?)
+
+ third homework:
+ find the bugs (not one!) in hw3.3.cpp and give the right answer
+ Theory: Given a matrix M and a vector v, calculate the square of the norm of Mv
+	In python numpy, it's B = M @ v, and calculate B.T @ B
