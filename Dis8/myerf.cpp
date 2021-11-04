@@ -48,7 +48,7 @@ double myerf::erfc_Chebyshev(double x)
 double erfccheb(double z)
 {
     int j;
-    const int ncof = 9;
+    const int ncof = 28;
     const double cof[28] = {-1.3026537197817094, 6.4196979235649026e-1,
                             1.9476473204185836e-2, -9.561514786808631e-3, -9.46595344482036e-4,
                             3.66839497852761e-4, 4.2523324806907e-5, -2.0278578112534e-5,

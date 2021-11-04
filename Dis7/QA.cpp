@@ -8,13 +8,15 @@ std::map<std::string, Action> operation_map { {"p", press}, {"q", insert}, {"e",
 
 //2. state /should have the ability/ to change the machine to another state/
 // 2.1 ability --> Use whose function?
-    //machine's function
+    // machine's function
     // state should have a pointer to the machine (abstract machine)
 
 // 2.2  State --> where is the another state stored?
 // machine has a pinter to the list of all the states allthestates: state->machine->changestate(state->machine->allthestates[i])
     // constructor
     // Another class StateFactory (AbstractStateFactory)
+
+
 // state has a pointer to all the states allthestates: state->machine->changestate(state->allthestates[i])
     // Another class StateFactory (AbstractStateFactory)
 
