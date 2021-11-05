@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
     // OV_mat.print("OV_mat");
 
     // mol.PrintAtoms();
-    CNDO ourSCF(mol, 2000, 1e-8);
+    CNDO ourSCF(mol, 2000, 1e-7);
     int ok = ourSCF.init();
     if(ok != 0) return EXIT_FAILURE;
-    ok = ourSCF.run();
-    // ok = ourSCF.run_DIIS();
+    // ok = ourSCF.run();
+    ok = ourSCF.run_DIIS();
     if(ok != 0) return EXIT_FAILURE;
     double Energy = ourSCF.getEnergy();
     printf("The molecule in file %s has energy %f\n", argv[1], Energy);
