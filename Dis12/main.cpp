@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     // OV_mat.print("OV_mat");
 
     // mol.PrintAtoms();
-    CNDO ourSCF(mol, 50, 1e-6);
+    CNDO ourSCF(mol, 2000, 1e-8);
     int ok = ourSCF.init();
     if(ok != 0) return EXIT_FAILURE;
     ok = ourSCF.run();

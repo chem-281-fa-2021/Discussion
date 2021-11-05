@@ -191,7 +191,7 @@ int CNDO::run()
     k++;
     if (k == max_iter)
     {
-      cout << "Error: the job could not be finished in " << max_iter << "iterations.\n";
+      cout << "Error: the job could not be finished in " << max_iter << " iterations.\n";
       return 1;
     }
     updateF();
@@ -213,38 +213,49 @@ void DIIS(arma::mat &e, arma::vec &c){
   e_mat.col(rank -1).fill(-1.);
   e_mat.row(rank -1).fill(-1.);
   e_mat(rank -1, rank -1) = 0.;
-  // e_mat.print();
   e_mat.submat( 0, 0, rank -2, rank -2) = e.t() *e;
+  // e_mat.print("e_mat");
   c =arma::solve(e_mat, b);
 }
 
 int CNDO::run_DIIS()
 {
+  int DIIS_circle = 4;
   updateF();
   arma::mat Pa_old, Pb_old;
-  arma::mat Fa_record(dim*dim, 3), Fb_record(dim*dim, 3);
-  arma::mat ea(dim*dim, 3), eb(dim*dim, 3);
+  arma::mat Fa_record(dim*dim, DIIS_circle), Fb_record(dim*dim, DIIS_circle);
+  arma::mat ea(dim*dim, DIIS_circle), eb(dim*dim, DIIS_circle);
   size_t k = 0;
   for (; k < max_iter; k++)
   {
     double res_err = Iteration();
     if (res_err < tol)
       break;
-    arma::mat Fa_r(Fa_record.colptr(k%3), dim, dim, false, true);
-    arma::mat Fb_r(Fb_record.colptr(k%3), dim, dim, false, true);
+    updateF();
+    int k_DIIS = k % DIIS_circle;
+    arma::mat Fa_r(Fa_record.colptr(k_DIIS), dim, dim, false, true);
+    arma::mat Fb_r(Fb_record.colptr(k_DIIS), dim, dim, false, true);
     Fa_r = Fa; Fb_r = Fb;
-    arma::mat ea_r(ea.colptr(k%3), dim, dim, false, true);
-    arma::mat eb_r(eb.colptr(k%3), dim, dim, false, true);
-    ea_r = Fa * Pa * S - S * Fa *Pa;
-    eb_r = Fb * Pb * S - S * Fb *Pb;
-    if(k%3 == 2 && k/3 > 0){
-      arma::vec ca(4), cb(4);
+    arma::mat ea_r(ea.colptr(k_DIIS), dim, dim, false, true);
+    arma::mat eb_r(eb.colptr(k_DIIS), dim, dim, false, true);
+    ea_r = Fa * Pa - Pa * Fa;
+    ea.col(k_DIIS) = ea_r.as_col();
+    // ea_r.print("ea");
+    eb_r = Fb * Pb - Pb *Fb;
+    if(k_DIIS == DIIS_circle - 1 && k/DIIS_circle > 0){
+      arma::vec ca(DIIS_circle + 1), cb(DIIS_circle + 1);
       DIIS(ea, ca);
       DIIS(eb, cb);
-      Fa_record.col(k%3) = Fa_record.col(0) * ca(0) + Fa_record.col(1) * ca(1) + Fa_record.col(2) * ca(2);
-      Fb_record.col(k%3) = Fb_record.col(0) * cb(0) + Fb_record.col(1) * cb(1) + Fb_record.col(2) * cb(2);
-    }else
-      updateF();
+      // ca.print("ca");
+      arma::vec Fa_vec(Fa.memptr(), dim*dim, false, true);
+      arma::vec Fb_vec(Fb.memptr(), dim*dim, false, true);
+      Fa_vec = Fa_record.col(0) *ca(0);
+      Fb_vec = Fb_record.col(0) *cb(0);
+      for(size_t j = 1; j< DIIS_circle; j++){
+        Fa_vec += Fa_record.col(j) *ca(j);
+        Fb_vec += Fb_record.col(j) *ca(j);
+      }
+    }
     
   }
   if (k == max_iter)
